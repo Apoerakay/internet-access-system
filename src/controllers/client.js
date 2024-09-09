@@ -40,8 +40,21 @@ export const validateClientAccess = async (req, res, next) => {
     next();
 };
 
+  // Controller to fetch active clients
+export const getActiveClients = async (req, res) => {
+    try {
+      const activeClients = await Client.find({
+        isActive: true, // Active status
+        tokenExpiresAt: { $gt: new Date() }, // Token hasn't expired
+      }).select('username activeDeviceIp tokenExpiresAt accessDuration'); // Selecting necessary fields
   
-
+      // Respond with the list of active clients
+      res.status(200).json({ message: 'Active clients fetched successfully', clients: activeClients });
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching active clients', error: error.message });
+    }
+  };
+  
 
 
   export const clientLogout= async(req,res)=>{

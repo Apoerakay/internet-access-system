@@ -1,6 +1,7 @@
 import express from "express"
 import mongoose from "mongoose"
 import dotenv from "dotenv"
+import cors from "cors"
 import adminRouter from "../src/routes/admin.js"
 import clientRouter from "../src/routes/client.js"
 
@@ -10,7 +11,7 @@ dotenv.config()
 const server = express()
 
 server.use(express.json())
-
+server.use(cors())
 const mongoUri= process.env.mongoUrl
 
 mongoose.connect(mongoUri,{}).then(()=>{
