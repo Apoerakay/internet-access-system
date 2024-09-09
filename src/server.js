@@ -11,7 +11,11 @@ dotenv.config()
 const server = express()
 
 server.use(express.json())
-server.use(cors())
+server.use(cors({
+    origin: 'http://localhost:3000', // replace with your frontend domain
+    methods: ['GET', 'POST'], // Specify allowed methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allow Authorization header
+  }));
 const mongoUri= process.env.mongoUrl
 
 mongoose.connect(mongoUri,{}).then(()=>{
